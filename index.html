@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/favicon.svg"
+    />
+    <title>My KanBan Tracker</title>
+</head>
+
+<body class="h-screen font-plus-jakarta-sans overflow-hidden"> <!-- Set full viewport height and prevent scrolling -->
+    <div class="flex flex-col xl:flex-row h-full">
+        <!-- Sidebar - Now visible on mobile with toggle functionality -->
+        <div class="w-full xl:w-[300px] bg-white border-r border-[#E4EBFA] xl:h-screen flex-shrink-0">
+            <div class="p-8">
+                <img class="h-[26px] w-[153px] xl:mb-[52px]" src="https://raw.githubusercontent.com/CodeSpace-Academy/JSL01-2025/6f88031913c1c439221f03a3afbbad251bd5e0eb/assets/logo-light.svg" alt="Kanban logo"/>
+                <!-- Navigation Sidebar: Contains the logo, navigation links for boards, and theme toggle. -->
+                <nav class="hidden xl:block mt-8">
+                    <div class="hidden xl:flex xl:justify-start xl:items-center xl:mb-6">
+                        <h4 class="font-plus-jakarta-sans text-gray-500 font-bold text-xs tracking-wider">ALL BOARDS</h4>
+                        <span class="font-plus-jakarta-sans text-gray-500 font-bold text-xs tracking-wider xl:ml-2">(1)</span>
+                    </div>
+          
+                    <!-- Button -->
+                    <button class="flex items-center font-plus-jakarta-sans py-3 px-6 xl:-mx-8 w-full rounded-r-full bg-[#635fc7] text-white font-plus-jakarta-sans font-bold text-base transition-colors hover:bg-purple-700">
+                        Launch Career
+                    </button>
+
+                    <!-- Add Board button -->
+                    <button class="flex items-center justify-center hover:bg-purple-600 text-white font-medium py-3 px-4 rounded-full transition-colors">
+                        <svg class="h-4 w-4 text-white" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="m11 11h-7.25c-.414 0-.75.336-.75.75s.336.75.75.75h7.25v7.25c0 .414.336.75.75.75s.75-.336.75-.75v-7.25h7.25c.414 0 .75-.336.75-.75s-.336-.75-.75-.75h-7.25v-7.25c0-.414-.336-.75-.75-.75s-.75.336-.75.75z" fill="currentColor"/>
+                        </svg>
+                        <span class="ml-2">Add New Board</span>
+                    </button>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Main Layout: Header with board title, add task button, and main content area for task columns. -->
+        <!-- Create the top Header Layer -->
+        <!-- Main Content Area -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Header -->
+            <header class="hidden xl:block bg-white border-b border-[#E4EBFA] p-6">
+                <div class="flex justify-between items-center">
+                    <h2 class="font-plus-jakarta-sans font-bold text-2xl">Launch Career</h2>
+          
+                    <!-- Add Task Button  -->
+                    <!-- <button id="startButton" class="flex items-center justify-center bg-[#635fc7] hover:bg-purple-600 text-white font-medium py-3 px-4 rounded-full transition-colors">
+                        <svg class="h-4 w-4 text-white" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="m11 11h-7.25c-.414 0-.75.336-.75.75s.336.75.75.75h7.25v7.25c0 .414.336.75.75.75s.75-.336.75-.75v-7.25h7.25c.414 0 .75-.336.75-.75s-.336-.75-.75-.75h-7.25v-7.25c0-.414-.336-.75-.75-.75s-.75.336-.75.75z" fill="currentColor"/>
+                        </svg>
+                        <span class="ml-2 font-plus-jakarta-sans ">Add New Task</span>
+                    </button> -->
+                </div>
+            </header>
+            
+            <!-- main content area for task columns. -->
+            <main class="flex-1 overflow-auto p-4 bg-[#F4F7FD] font-plus-jakarta-sans xl:flex">
+            
+                <!-- Task columns -->
+                <div id="todo-column" class="column flex flex-col xl:flex mb-4">
+                    <div class="flex justify-start items-center mt-2 font-plus-jakarta-sans text-[#828FA3] font-bold not-italic text-xs leading-[100%] tracking-[2.4px]">
+                        <span class="h-[15px] w-[15px] rounded-full block bg-[#49c4e5]"></span>
+                        <h4 class="ml-1">TODO</h4>
+                        <span class="ml-2">(4)</span>
+                    </div>
+                    <!-- Tasks container for TODO -->
+                    <ul id="todo-tasks" class="flex flex-col font-bold text-[15px] leading-[100%] tracking-[0px] rotate-0 opacity-100 ml-2 mt-2">
+                        <li class="mt-4 py-5 px-3 mr-2 w-max-[320px] md:w-[280px] h-[60px] bg-white rounded-lg shadow-[0px_4px_6px_0px_rgba(54,78,126,0.1)] transition-all hover:shadow-md">Launch Epic Career 🚀</li>
+                        <li class="mt-4 py-5 px-3 mr-2 w-max-[320px] md:w-[280px] h-[60px] bg-white rounded-lg shadow-[0px_4px_6px_0px_rgba(54,78,126,0.1)] transition-all hover:shadow-md">Conquer React ⚛️</li>
+                        <li class="mt-4 py-5 px-3 mr-2 w-max-[320px] md:w-[280px] h-[60px] bg-white rounded-lg shadow-[0px_4px_6px_0px_rgba(54,78,126,0.1)] transition-all hover:shadow-md">Understand Databases ⚙️</li>
+                        <li class="mt-4 py-5 px-3 mr-2 w-max-[320px] md:w-[280px] h-[60px] bg-white rounded-lg shadow-[0px_4px_6px_0px_rgba(54,78,126,0.1)] transition-all hover:shadow-md">Crush Frameworks 🖼️</li>
+                    </ul>
+                </div>
+
+                <!-- DOING Column -->
+                <div id="doing-column" class="column flex flex-col mb-4">
+                    <div class="flex justify-start items-center mt-2 font-plus-jakarta-sans text-[#828FA3] font-bold not-italic text-xs leading-[100%] tracking-[2.4px]">
+                        <span class="h-[15px] w-[15px] rounded-full block bg-[#8471f2]"></span>
+                        <h4 class="ml-1">DOING</h4>
+                        <span class="ml-2">(2)</span>
+                    </div>
+                    <!-- Tasks container for DOING -->
+                    <ul id="doing-tasks" class="flex flex-col font-bold text-[15px] leading-[100%] tracking-[0px] rotate-0 opacity-100 ml-2 mt-2">
+                        <li class="mt-4 py-5 px-3 mr-2 w-max-[320px] md:w-[280px] h-[60px] bg-white rounded-lg shadow-[0px_4px_6px_0px_rgba(54,78,126,0.1)] transition-all hover:shadow-md">Master JavaScript 💛</li>
+                        <li class="mt-4 py-5 px-3 mr-2 w-max-[320px] md:w-[280px] h-[60px] bg-white rounded-lg shadow-[0px_4px_6px_0px_rgba(54,78,126,0.1)] transition-all hover:shadow-md">Keep on Going 🏆</li>
+                    </ul>
+                </div>
+
+                <!-- DONE Column -->
+                <div id="done-column" class="column flex flex-col mb-4">
+                    <div class="flex justify-start items-center mt-2 font-plus-jakarta-sans text-[#828FA3] font-bold not-italic text-xs leading-[100%] tracking-[2.4px]">
+                        <span class="h-[15px] w-[15px] rounded-full block bg-[#219c90]"></span>
+                        <h4 class="ml-1">DONE</h4>
+                        <span class="ml-2">(2)</span>
+                    </div>
+                    <!-- Tasks container for DONE -->
+                    <ul id="done-tasks" class="flex flex-col font-bold text-[15px] leading-[100%] tracking-[0px] rotate-0 opacity-100 ml-2 mt-2">
+                        <li class="mt-4 py-5 px-3 mr-2 w-max-[320px] md:w-[280px] h-[60px] bg-white rounded-lg shadow-[0px_4px_6px_0px_rgba(54,78,126,0.1)] transition-all hover:shadow-md">Explore ES6 Features 🚀</li>
+                        <li class="mt-4 py-5 px-3 mr-2 w-max-[320px] md:w-[280px] h-[60px] bg-white rounded-lg shadow-[0px_4px_6px_0px_rgba(54,78,126,0.1)] transition-all hover:shadow-md">Build Portfolio Projects 🛠️</li>
+                    </ul>
+                </div>
+            </main>
+            <!-- <div class="h-[80px] overflow-auto" id="output"></div> -->
+        </div>
+    </div>
+
+    <!-- The model -->
+    <div class="modal hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" id="task-modal">
+        <div class="bg-white rounded-lg p-6 max-w-md mx-3  w-[600px] h-[415px] top-[242px] left-[456px] rounded-[6px] opacity-100 transform-none">
+            <div class="modal-actions flex justify-between items-center mb-4">
+                <h2 id="modal-title" class="text-2xl font-bold font-plus-jakarta-sans text-gray-800">Task</h2>
+                <button type="button" class="py-2 text-3xl font-extrablack text-[#EA5555] hover:text-red-900" id="cancel-btn">×</button>
+            </div>
+            <form id="task-form">
+                <input type="hidden" id="task-id">
+                <div class="form-group mb-4">
+                    <label for="task-title" class="block text-sm font-medium font-plus-jakarta-sans text-gray-700 mb-1">Title</label>
+                    <input type="text" id="task-title" required  class="w-full font-plus-jakarta-sans px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-600">
+                </div>
+                <div class="form-group mb-4">
+                    <label for="task-description" class="block text-sm font-plus-jakarta-sans  font-medium text-gray-700 mb-1">Description</label>
+                    <textarea id="task-description" required class="w-full px-3 font-plus-jakarta-sans  py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-600 h-24"></textarea>
+                </div>
+                <div class="form-group relative mb-6">
+                    <label for="task-status" class="block text-sm font-medium font-plus-jakarta-sans text-gray-700 mb-1">Status</label>
+                    <select id="task-status" required class="w-full px-2 py-2 font-plus-jakarta-sans border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-600 text-gray-400 [&>option:checked]:text-black">
+                        <option class="bg-white text-gray-400 hover:bg-gray-900" value="todo">todo</option>
+                        <option class="bg-white text-gray-400 hover:bg-gray-900" value="doing">doing</option>
+                        <option class="bg-white text-gray-400 hover:bg-gray-900" value="done">done</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Linking the Javacript to the html -->
+    <script src="scripts.js"></script>
+</body>
+</html>
