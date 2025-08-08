@@ -67,12 +67,12 @@ let currentTask = null;
  * @param {Object} task - The tasks which are stored in an array and declared as tasks
  * @returns {HTMLLIElement} - The created list item elements
  */
-function createTaskElement(task) {
+function createTaskElement(initialTasks) {
     const taskElementCreated = document.createElement("li"); // 7. Creates an HTML list item element for a task
     taskElementCreated.className = 'task mt-4 py-5 px-3 mr-2 w-max-[320px] xl:w-[280px] h-[60px] bg-white rounded-lg shadow-[0px_4px_6px_0px_rgba(54,78,126,0.1)] transition-all hover:shadow-md';
     //8. Sets appropriate classes for styling and also creates a className for the new class
-    taskElementCreated.innerHTML = `<h3 class="font-bold">${task.title}</h3>`;
-    taskElementCreated.setAttribute('data-id', task.id);
+    taskElementCreated.innerHTML = `<h3 class="font-bold">${initialTasks.title}</h3>`;
+    taskElementCreated.setAttribute('data-id', initialTasks.id);
     // 9. Includes the task title and sets a data-id attribute
     return taskElementCreated;
     // Returns the created DOM element
@@ -130,7 +130,7 @@ function updateTaskCounts() {
  * @returns A modal that is populated with the informtion that the corresponds to the matched ID
  */
 function openEditModal(taskId) {
-    currentTask = tasks.find(task => task.id === taskId);
+    currentTask = initialTasks.find(task => task.id === taskId);
     
     if (!currentTask) return;
   
@@ -206,7 +206,7 @@ const validateInputs = () => {
     // Store task details in object
     if(taskTitleInputValue && taskDescInputValue && taskStatusInputValue) {
         const output = {
-            id: tasks.length + 1,
+            id: initialTasks.length + 1,
             title: taskTitleInputValue,
             description: taskDescInputValue,
             status: taskStatusInputValue
