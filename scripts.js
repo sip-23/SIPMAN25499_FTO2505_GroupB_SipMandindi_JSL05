@@ -1,4 +1,48 @@
-import { initialTasks } from "./initialData.js";
+// import { initialTasks } from "./initialData.js";
+
+const initialTasks = [
+  {
+    id: 1,
+    title: "Launch Epic Career 🚀",
+    description: "Create a killer Resume",
+    status: "todo",
+  },
+  {
+    id: 2,
+    title: "Master JavaScript 💛",
+    description: "Get comfortable with the fundamentals",
+    status: "doing",
+  },
+  {
+    id: 3,
+    title: "Keep on Going 🏆",
+    description: "You're almost there",
+    status: "doing",
+  },
+
+  {
+    id: 4,
+    title: "Learn Data Structures and Algorithms 📚",
+    description:
+      "Study fundamental data structures and algorithms to solve coding problems efficiently",
+    status: "todo",
+  },
+  {
+    id: 5,
+    title: "Contribute to Open Source Projects 🌐",
+    description:
+      "Gain practical experience and collaborate with others in the software development community",
+    status: "done",
+  },
+  {
+    id: 6,
+    title: "Build Portfolio Projects 🛠️",
+    description:
+      "Create a portfolio showcasing your skills and projects to potential employers",
+    status: "done",
+  },
+];
+
 
 const todoTasks = document.getElementById('todo-tasks');
 const doingTasks = document.getElementById('doing-tasks');
@@ -7,7 +51,6 @@ const modal = document.getElementById('task-modal');
 const taskForm = document.getElementById('task-form');
 const cancelBtn = document.getElementById('cancel-btn');
 const addTask = document.getElementById('addTaskButton');
-const submitNewTask = document.getElementById('submitButton');
 
 // Modal input fields that are stored and showed
 const taskIdInput = document.getElementById('task-id');
@@ -18,7 +61,7 @@ const taskStatusInput = document.getElementById('task-status');
 // Current task that I want to show
 let currentTask = null;
 
-// Create task function
+// Create task function - Element
 /**
  * Creates the list element and its respective / relevent classes in the DOM.
  * @param {Object} task - The tasks which are stored in an array and declared as tasks
@@ -48,7 +91,7 @@ function showSortedTasks() {
     doneTasks.innerHTML = '';
 
     // Sort tasks into columns
-    tasks.forEach(task => {
+    initialTasks.forEach(task => {
         const taskElement = createTaskElement(task);
         
     
@@ -105,18 +148,16 @@ function openEditModal(taskId) {
 // save new task
 /**
  * This allos changes to be made in modal to be savd
- * @param {Event} e - Is the submit event from the form before
+ * @param {Event} e - Is the submit event from the form
  * @returns 
  */
 function addTasksubmit() {
-    submitNewTask.addEventListener('submit', e => {
+    taskForm.addEventListener('submit', e => {
         e.preventDefault();
-
+        openModel();
         validateInputs();
         showSortedTasks();
-
-    })
-    
+    })  
 };
 
 const setError = (element, message) => {
@@ -141,43 +182,47 @@ const setSuccess = element => {
 // Validating inputs
 const validateInputs = () => {
     const taskTitleInputValue = taskTitleInput.value.trim();
-    const taskDescInputValue = taskStatusInput.value.trim();
+    const taskDescInputValue = taskDescInput.value.trim();
     const taskStatusInputValue = taskStatusInput.value;
 
     if(!taskTitleInputValue || taskTitleInputValue.trim() === "") {
-        setError(taskTitleInputValue, "Task title cannot be empty!");
+        setError(taskTitleInput, "Task title cannot be empty!");
     } else{
-        setSuccess(taskTitleInputValue);
+        setSuccess(taskTitleInput);
     }
 
     if(!taskDescInputValue || taskDescInputValue.trim() === "") {
-        setError(taskDescInputValue, "Task description cannot be empty!");
+        setError(taskDescInput, "Task description cannot be empty!");
     } else{
-        setSuccess(taskDescInputValue);
+        setSuccess(taskDescInput);
     }
 
     if(!taskStatusInputValue || taskStatusInputValue === "") {
-        setError(taskStatusInputValue, "INVALID STATUS! Please enter only: todo, doing, or done");
+        setError(taskStatusInput, "INVALID STATUS! Please enter only: todo, doing, or done");
     } else{
-        setSuccess(taskStatusInputValue);
+        setSuccess(taskStatusInput);
     }
 
     // Store task details in object
-    const output = {
-      id: tasks.length + 1,
-      title: taskTitleInputValue,
-      description: taskDescInputValue,
-      status: taskStatusInputValue
-    };
-
-    // Add task to the existing array
-    tasks.push(output);
-
-    closeModal();
+    if(taskTitleInputValue && taskDescInputValue && taskStatusInputValue) {
+        const output = {
+            id: tasks.length + 1,
+            title: taskTitleInputValue,
+            description: taskDescInputValue,
+            status: taskStatusInputValue
+        };
+        
+        // Add task to the existing array
+        initialTasks.push(output);
+        
+        // Close the modal
+        closeModal();
+    }
 };
 
+
 // function to open modal
-function OpenModel() {
+function openModel() {
     modal.classList.remove('hidden')
 }
 
@@ -234,6 +279,9 @@ function setupEventListeners() {
         });
     });
 
+    // Open modal once add new button is clicked
+    addTask.addEventListener('click', openModel);
+
     // Modal close and opening event listeners
     cancelBtn.addEventListener('click', closeModal);
     taskForm.addEventListener('submit', saveTaskChanges);
@@ -256,6 +304,7 @@ function setupEventListeners() {
 function init() {
     showSortedTasks();
     setupEventListeners();
+    addTasksubmit();
 }
 
 // Start the application
