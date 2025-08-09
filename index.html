@@ -32,7 +32,7 @@
                     </div>
           
                     <!-- Button -->
-                    <button class="flex items-center font-plus-jakarta-sans py-3 px-6 lg:-mx-8 w-full rounded-r-full bg-[#635fc7] text-white font-plus-jakarta-sans font-bold text-base transition-colors hover:bg-purple-700">
+                    <button class="flex items-center font-plus-jakarta-sans py-3 px-6 lg:-mx-8 w-full rounded-r-full bg-[#635fc7] text-white font-plus-jakarta-sans font-bold text-base transition-colors hover:bg-[#A8A4FF]">
                         Launch Career
                     </button>
 
@@ -65,7 +65,7 @@
                             <path style=" stroke:none;fill-rule:nonzero;fill:rgb(54.11765%,52.941179%,83.529413%);fill-opacity:1;" d="M 19.472656 15 C 19.472656 12.085938 19.460938 9.296875 19.476562 6.507812 C 19.488281 4.214844 21.089844 2.589844 23.390625 2.535156 C 24.597656 2.507812 25.804688 2.5 27.011719 2.535156 C 29.414062 2.609375 31.003906 4.191406 31.003906 6.578125 C 31.019531 20.023438 31.019531 33.472656 31.003906 46.917969 C 31.003906 49.269531 29.445312 50.777344 27.070312 50.8125 C 25.90625 50.832031 24.738281 50.824219 23.574219 50.816406 C 20.941406 50.792969 19.476562 49.34375 19.472656 46.722656 C 19.46875 36.191406 19.472656 25.65625 19.472656 15 Z M 19.472656 15 "/>
                         </g>
                     </svg>
-                    <button id="addTaskButton" class="flex items-center justify-center bg-[#635fc7] hover:bg-purple-600 text-white font-medium py-3 px-4 rounded-full transition-colors">
+                    <button id="addTaskButton" class="flex items-center justify-center bg-[#635fc7] hover:bg-[#A8A4FF] text-white font-medium py-3 px-4 rounded-full transition-colors">
                         <svg class="h-4 w-4 text-white" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="m11 11h-7.25c-.414 0-.75.336-.75.75s.336.75.75.75h7.25v7.25c0 .414.336.75.75.75s.75-.336.75-.75v-7.25h7.25c.414 0 .75-.336.75-.75s-.336-.75-.75-.75h-7.25v-7.25c0-.414-.336-.75-.75-.75s-.75.336-.75.75z" fill="currentColor"/>
                         </svg>
@@ -129,7 +129,7 @@
     <div class="modal hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" id="task-modal">
         <div class="bg-white rounded-lg p-8 max-w-md mx-3 w-[479px] h-[479px] rounded-[6px] opacity-100 transform-none">
             <div class="modal-actions flex justify-between items-center mb-3">
-                <h2 id="modal-title" class="text-2xl font-bold font-plus-jakarta-sans text-gray-800">Task</h2>
+                <h2 id="modal-title" class="text-2xl font-bold font-plus-jakarta-sans text-gray-800">Add New Task</h2>
                 <button type="button" class="py-2 text-3xl font-extrablack text-[#EA5555] hover:text-red-900" id="cancel-btn">×</button>
             </div>
             <form id="task-form">
@@ -153,12 +153,53 @@
                     </select>
                     <div class="error"></div>
                     <!-- Adding the submit button -->
-                    <button id="submitButton" type="submit" class="flex items-center justify-center bg-[#635fc7] hover:bg-purple-600 h-[40px] w-full text-white font-medium py-3 px-4 mt-6 rounded-full transition-colors">
+                    <button id="submitButton" type="submit" class="flex items-center justify-center bg-[#635fc7] hover:bg-[#A8A4FF] h-[40px] w-full text-white font-medium py-3 px-4 mt-6 rounded-full transition-colors">
                         <!-- <svg class="h-4 w-4 text-white" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="m11 11h-7.25c-.414 0-.75.336-.75.75s.336.75.75.75h7.25v7.25c0 .414.336.75.75.75s.75-.336.75-.75v-7.25h7.25c.414 0 .75-.336.75-.75s-.336-.75-.75-.75h-7.25v-7.25c0-.414-.336-.75-.75-.75s-.75.336-.75.75z" fill="currentColor"/>
                         </svg> -->
                         <span class="ml-2 font-plus-jakarta-sans ">Create Task</span>
-                </button>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- The model -->
+    <div class="Edit-modal hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" id="edit-task-modal">
+        <div class="bg-white rounded-lg p-8 max-w-md mx-3 w-[479px] h-[479px] rounded-[6px] opacity-100 transform-none">
+            <div class="Edit-modal-actions flex justify-between items-center mb-3">
+                <h2 id="Edit-modal-title" class="text-2xl font-bold font-plus-jakarta-sans text-gray-800">Task</h2>
+                <button type="button" class="py-2 text-3xl font-extrablack text-[#EA5555] hover:text-red-900" id="edit-cancel-btn">×</button>
+            </div>
+            <form id="edit-task-form">
+                <input type="hidden" id="task-id">
+                <div class="Edit-form-group mb-4">
+                    <label for="task-title" class="block text-sm font-medium font-plus-jakarta-sans text-gray-700 mb-1">Title</label>
+                    <input type="text" id="edit-task-title" required  class="w-full font-plus-jakarta-sans px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-600">
+                    <div class="error"></div>
+                </div>
+                <div class="Edit-form-group mb-4">
+                    <label for="task-description" class="block text-sm font-plus-jakarta-sans  font-medium text-gray-700 mb-1">Description</label>
+                    <textarea id="edit-task-description" required class="w-full px-3 font-plus-jakarta-sans  py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-600 h-24"></textarea>
+                    <div class="error"></div>
+                </div>
+                <div class="Edit-form-group relative mb-6">
+                    <label for="task-status" class="block text-sm font-medium font-plus-jakarta-sans text-gray-700 mb-1">Status</label>
+                    <select id="edit-task-status" required class="w-full px-2 py-2 font-plus-jakarta-sans border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-600 text-gray-400 [&>option:checked]:text-black">
+                        <option class="bg-white text-gray-400 hover:bg-gray-900" value="todo">todo</option>
+                        <option class="bg-white text-gray-400 hover:bg-gray-900" value="doing">doing</option>
+                        <option class="bg-white text-gray-400 hover:bg-gray-900" value="done">done</option>
+                    </select>
+                    <div class="error"></div>
+                </div>
+                <!-- Adding the submit button -->
+                <div class="flex items-center justify-center">
+                    <button id="SaveChangesBtn" type="submit" class="flex items-center justify-center bg-[#635fc7] hover:bg-[#A8A4FF] h-[40px] w-full text-white font-medium py-3 px-4 mt-2 mr-1 rounded-full transition-colors">
+                        <span class=" font-plus-jakarta-sans ">Save Changes</span>
+                    </button>
+                    <button id="DeleteTaskBtn" type="submit" class="flex items-center justify-center bg-[#EA5555] hover:bg-[#FF9898] h-[40px] w-full text-white font-medium py-3 px-4 mt-2 ml-1 rounded-full transition-colors">
+                        <span class=" font-plus-jakarta-sans ">Delete Task</span>
+                    </button>
                 </div>
             </form>
         </div>

@@ -51,6 +51,9 @@ const doneTasks = document.getElementById('done-tasks');
 const modal = document.getElementById('task-modal');
 const taskForm = document.getElementById('task-form');
 const cancelBtn = document.getElementById('cancel-btn');
+const editModal = document.getElementById('edit-task-modal');
+const editTaskForm = document.getElementById('edit-task-form');
+const editCancelBtn = document.getElementById('edit-cancel-btn');
 const addTask = document.getElementById('addTaskButton');
 
 // Modal input fields that are stored and showed
@@ -58,6 +61,9 @@ const taskIdInput = document.getElementById('task-id');
 const taskTitleInput = document.getElementById('task-title');
 const taskDescInput = document.getElementById('task-description');
 const taskStatusInput = document.getElementById('task-status');
+const editTaskTitleInput = document.getElementById('edit-task-title');
+const editTaskDescInput = document.getElementById('edit-task-description');
+const editTaskStatusInput = document.getElementById('edit-task-status');
 
 // Current task that I want to show
 let currentTask = null;
@@ -69,12 +75,12 @@ let currentTask = null;
  * @returns {HTMLLIElement} - The created list item elements
  */
 function createTaskElement(initialTasks) {
-    const taskElementCreated = document.createElement("li"); // 7. Creates an HTML list item element for a task
+    const taskElementCreated = document.createElement("li"); // Creates an HTML list item element for a task
     taskElementCreated.className = 'task mt-4 py-5 px-3 mr-2 w-max-[320px] xl:w-[280px] h-[60px] bg-white rounded-lg shadow-[0px_4px_6px_0px_rgba(54,78,126,0.1)] transition-all hover:shadow-md';
-    //8. Sets appropriate classes for styling and also creates a className for the new class
+    // Sets appropriate classes for styling and also creates a className for the new class
     taskElementCreated.innerHTML = `<h3 class="font-bold">${initialTasks.title}</h3>`;
     taskElementCreated.setAttribute('data-id', initialTasks.id);
-    // 9. Includes the task title and sets a data-id attribute
+    // Includes the task title and sets a data-id attribute
     return taskElementCreated;
     // Returns the created DOM element
 }
@@ -116,8 +122,8 @@ function showSortedTasks() {
  * Selects the Element container with the specified id and select the last child of the target parent and gives it the value of length of the Elements in that column
  */
 function updateTaskCounts() {
-  // 14. Updates the count numbers in each column header
-  // 15. selects the DOM at the attribute node and uses the property .textcontent to update / set it with the length of the children nodes/ elements
+  // Updates the count numbers in each column header
+  // selects the DOM at the attribute node and uses the property .textcontent to update / set it with the length of the children nodes/ elements
   document.querySelector('#todo-column span:last-child').textContent = `(${todoTasks.children.length})`; 
   document.querySelector('#doing-column span:last-child').textContent = `(${doingTasks.children.length})`;
   document.querySelector('#done-column span:last-child').textContent = `(${doneTasks.children.length})`;
@@ -136,12 +142,12 @@ function openEditModal(taskId) {
   
     // populate the modal with task data that was salected
     taskIdInput.value = currentTask.id;
-    taskTitleInput.value = currentTask.title;
-    taskDescInput.value = currentTask.description;
-    taskStatusInput.value = currentTask.status;
+    editTaskTitleInput.value = currentTask.title;
+    editTaskDescInput.value = currentTask.description;
+    editTaskStatusInput.value = currentTask.status;
   
     // Show the modal
-    modal.classList.remove('hidden');
+    editModal.classList.remove('hidden');
 }
 
 // function to add new dask from the modal
@@ -238,6 +244,7 @@ function openModel() {
  */
 function closeModal() {
     modal.classList.add('hidden');
+    editModal.classList.add('hidden');
     currentTask = null;
 }
 
@@ -253,9 +260,9 @@ function saveTaskChanges(e) {
     if (!currentTask) return;
   
     // Update task object
-    currentTask.title = taskTitleInput.value;
-    currentTask.description = taskDescInput.value;
-    currentTask.status = taskStatusInput.value;
+    currentTask.title = editTaskTitleInput.value;
+    currentTask.description = editTaskDescInput.value;
+    currentTask.status = editTaskStatusInput.value;
     
     // Refresh display
     // Refreshes the display and closes the modal
@@ -290,10 +297,16 @@ function setupEventListeners() {
 
     // Modal close and opening event listeners
     cancelBtn.addEventListener('click', closeModal);
-    // taskForm.addEventListener('update', saveTaskChanges);
+    editCancelBtn.addEventListener('click', closeModal);
+    editTaskForm.addEventListener('update', saveTaskChanges);
 
     // Close modal when clicking on the ouside of it
     modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+
+    // Close modal when clicking on the ouside of it
+    editModal.addEventListener('click', (e) => {
         if (e.target === modal) closeModal();
     });
   
