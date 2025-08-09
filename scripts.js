@@ -1,7 +1,7 @@
 // import { initialTasks } from "./initialData.js";
 
 
-const initialTasks = [
+const initialTasks = JSON.parse(localStorage.getItem('initialTasks')) || [
   {
     id: 1,
     title: "Launch Epic Career 🚀",
