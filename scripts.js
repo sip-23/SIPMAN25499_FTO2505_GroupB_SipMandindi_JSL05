@@ -1,5 +1,6 @@
 // import { initialTasks } from "./initialData.js";
 
+
 const initialTasks = [
   {
     id: 1,
@@ -82,7 +83,6 @@ function createTaskElement(initialTasks) {
 // Implemented function to show all tasks once the script is running on the main section
 /**
  * First cleans the HTML Elements and then Shows or Renders the tasks from the given array to the respactive columns in the DOM
- * 
  */
 function showSortedTasks() {
     // Clear all columns
@@ -151,13 +151,11 @@ function openEditModal(taskId) {
  * @param {Event} e - Is the submit event from the form
  * @returns 
  */
-function addTasksubmit() {
-    taskForm.addEventListener('submit', e => {
-        e.preventDefault();
-        openModel();
-        validateInputs();
-        showSortedTasks();
-    })  
+function addTasksubmit(e) {
+    e.preventDefault();
+    validateInputs();
+    closeModal();
+    showSortedTasks();
 };
 
 const setError = (element, message) => {
@@ -215,14 +213,21 @@ const validateInputs = () => {
         // Add task to the existing array
         initialTasks.push(output);
         
-        // Close the modal
-        closeModal();
+        saveTask();
     }
 };
+
+// function to save task into local storage
+function saveTask() {
+    localStorage.setItem("initialTasks", JSON.stringify(initialTasks)); // convertd array into string version for local storgae to work with it
+}
 
 
 // function to open modal
 function openModel() {
+    taskTitleInput.value = '';
+    taskDescInput.value = '';
+    taskStatusInput.value = '';
     modal.classList.remove('hidden')
 }
 
@@ -281,10 +286,11 @@ function setupEventListeners() {
 
     // Open modal once add new button is clicked
     addTask.addEventListener('click', openModel);
+    taskForm.addEventListener('submit', addTasksubmit);
 
     // Modal close and opening event listeners
     cancelBtn.addEventListener('click', closeModal);
-    taskForm.addEventListener('submit', saveTaskChanges);
+    // taskForm.addEventListener('update', saveTaskChanges);
 
     // Close modal when clicking on the ouside of it
     modal.addEventListener('click', (e) => {
@@ -304,7 +310,6 @@ function setupEventListeners() {
 function init() {
     showSortedTasks();
     setupEventListeners();
-    addTasksubmit();
 }
 
 // Start the application
