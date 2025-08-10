@@ -71,16 +71,17 @@ let currentTask = null;
 // Create task function - Element
 /**
  * Creates the list element and its respective / relevent classes in the DOM.
- * @param {Object} task - The tasks which are stored in an array and declared as tasks
+ * @param {Object} initialTasks initailsTasks - The tasks which are stored in an array and declared as tasks
+ * @param {string} task.title - Title of the task.
+ * @param {number} task.id - Unique task ID.
+ * @param {string} task.status - Status column: 'todo', 'doing', or 'done'.
  * @returns {HTMLLIElement} - The created list item elements
  */
 function createTaskElement(initialTasks) {
     const taskElementCreated = document.createElement("li"); // Creates an HTML list item element for a task
     taskElementCreated.className = 'task mt-4 py-5 px-3 mr-2 w-max-[320px] xl:w-[280px] h-[60px] bg-white rounded-lg shadow-[0px_4px_6px_0px_rgba(54,78,126,0.1)] transition-all hover:shadow-md';
-    // Sets appropriate classes for styling and also creates a className for the new class
     taskElementCreated.innerHTML = `<h3 class="font-bold">${initialTasks.title}</h3>`;
     taskElementCreated.setAttribute('data-id', initialTasks.id);
-    // Includes the task title and sets a data-id attribute
     return taskElementCreated;
     // Returns the created DOM element
 }
@@ -155,7 +156,7 @@ function openEditModal(taskId) {
 /**
  * This allos changes to be made in modal to be savd
  * @param {Event} e - Is the submit event from the form
- * @returns 
+ * @returns {HTMLElement} The created task div element. 
  */
 function addTasksubmit(e) {
     e.preventDefault();
@@ -224,6 +225,10 @@ const validateInputs = () => {
 };
 
 // function to save task into local storage
+/**
+ * function to save task into local storage
+ * 
+ */
 function saveTask() {
     localStorage.setItem("initialTasks", JSON.stringify(initialTasks)); // convertd array into string version for local storgae to work with it
 }
